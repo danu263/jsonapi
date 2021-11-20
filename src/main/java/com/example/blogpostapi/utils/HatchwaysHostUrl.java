@@ -1,6 +1,6 @@
 package com.example.blogpostapi.utils;
 
-public final class HatchwaysHost {
+public final class HatchwaysHostUrl {
 
     public static final String URL = "https://api.hatchways.io";
 

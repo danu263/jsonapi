@@ -1,6 +1,6 @@
 package com.example.blogpostapi;
 
-import com.example.blogpostapi.utils.HatchwaysHost;
+import com.example.blogpostapi.utils.HatchwaysHostUrl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +13,7 @@ public class WebClientConfig {
     @Bean
     public WebClient hatchwaysWebClient(WebClient.Builder webClientBuilder) {
         return WebClient.builder()
-                .baseUrl(HatchwaysHost.URL)
+                .baseUrl(HatchwaysHostUrl.URL)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .build();

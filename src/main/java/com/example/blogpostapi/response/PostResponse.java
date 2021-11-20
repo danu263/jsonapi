@@ -2,11 +2,12 @@ package com.example.blogpostapi.response;
 
 import com.example.blogpostapi.entity.Post;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostResponse {
 
-    private List<Post> posts;
+    private List<Post> posts = new ArrayList<>();
 
     public PostResponse(List<Post> posts) {
         this.posts = posts;

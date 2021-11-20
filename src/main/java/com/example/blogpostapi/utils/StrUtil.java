@@ -13,16 +13,16 @@ public class StrUtil {
     public static boolean sortByIsValid(String s) {
         if (Strings.isNullOrEmpty(s)) return true;
         else return
-                s.equalsIgnoreCase("id") ||
-                s.equalsIgnoreCase("reads") ||
-                s.equalsIgnoreCase("likes") ||
-                s.equalsIgnoreCase("popularity");
+                s.equalsIgnoreCase(HatchwaysEnums.SortBy.ID.getValue()) ||
+                s.equalsIgnoreCase(HatchwaysEnums.SortBy.READS.getValue()) ||
+                s.equalsIgnoreCase(HatchwaysEnums.SortBy.LIKES.getValue()) ||
+                s.equalsIgnoreCase(HatchwaysEnums.SortBy.POPULARITY.getValue());
     }
 
     public static boolean directionIsValid(String s) {
         if (Strings.isNullOrEmpty(s)) return true;
         else return
-                s.equalsIgnoreCase("asc") ||
-                s.equalsIgnoreCase("desc");
+                s.equalsIgnoreCase(HatchwaysEnums.Order.ASC.getValue()) ||
+                s.equalsIgnoreCase(HatchwaysEnums.Order.DESC.getValue());
     }
 }
