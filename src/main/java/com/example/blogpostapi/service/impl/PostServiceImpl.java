@@ -1,5 +1,6 @@
 package com.example.blogpostapi.service.impl;
 
+import com.example.blogpostapi.entity.Ping;
 import com.example.blogpostapi.entity.Post;
 import com.example.blogpostapi.exception.BlogPostApiException;
 import com.example.blogpostapi.response.PostResponse;
