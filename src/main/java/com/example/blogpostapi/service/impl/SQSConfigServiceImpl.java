@@ -6,9 +6,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
-import com.amazonaws.services.sqs.model.AmazonSQSException;
-import com.amazonaws.services.sqs.model.CreateQueueRequest;
-import com.amazonaws.services.sqs.model.CreateQueueResult;
+import com.amazonaws.services.sqs.model.*;
 import com.example.blogpostapi.configuration.PropertiesConfiguration;
 import com.example.blogpostapi.service.SQSConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +20,16 @@ public class SQSConfigServiceImpl implements SQSConfigService {
 
     private static final String QUEUE_NAME = "my_first_queue";
 
-    @Override
-    public String createQueue() {
+    private AmazonSQS getSQS() {
         AWSCredentials credentials         = new BasicAWSCredentials(configuration.getApiKey(), configuration.getSecretKey());
         AWSStaticCredentialsProvider credentialsProvider = new AWSStaticCredentialsProvider(credentials);
 
-        AmazonSQS sqs = AmazonSQSClientBuilder.standard().withCredentials(credentialsProvider).withRegion(Regions.SA_EAST_1).build();
+        return AmazonSQSClientBuilder.standard().withCredentials(credentialsProvider).withRegion(Regions.SA_EAST_1).build();
+    }
+
+    @Override
+    public String createQueue() {
+        AmazonSQS sqs = getSQS();
         CreateQueueRequest createQueueRequest = new CreateQueueRequest(QUEUE_NAME)
                 .addAttributesEntry("DelaySeconds", "60")
                 .addAttributesEntry("MessageRetentionPeriod", "86400");
@@ -42,6 +44,26 @@ public class SQSConfigServiceImpl implements SQSConfigService {
         }
         if (result != null) {
             return result.getQueueUrl();
+        }
+        return null;
+    }
+
+    @Override
+    public String sendMessage(String message) {
+        AmazonSQS sqs = getSQS();
+        SendMessageRequest request = new SendMessageRequest()
+                .withQueueUrl("https://sqs.sa-east-1.amazonaws.com/657492150355/my_first_queue")
+                .withMessageBody(message);
+//                .withDelaySeconds(5);
+        SendMessageResult response = null;
+        try {
+            response = sqs.sendMessage(request);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
+        if (response != null) {
+            return response.getMessageId();
         }
         return null;
     }

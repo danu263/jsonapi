@@ -4,6 +4,7 @@ import com.example.blogpostapi.entity.Ping;
 import com.example.blogpostapi.response.PostResponse;
 import com.example.blogpostapi.service.PostService;
 import com.example.blogpostapi.service.SQSConfigService;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +38,11 @@ public class PostController {
     @GetMapping(path = "/createQueue", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createSQS() {
         return new ResponseEntity<>(sqsConfigService.createQueue(), OK);
+    }
+
+    @GetMapping(path = "/sendMessage", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> createSQS(@RequestParam String message) {
+        if (Strings.isBlank(message)) return new ResponseEntity<>("invalid message", OK);
+        return new ResponseEntity<>(sqsConfigService.sendMessage(message), OK);
     }
 }
