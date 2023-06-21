@@ -9,11 +9,15 @@ import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import com.amazonaws.services.sqs.model.*;
 import com.example.blogpostapi.configuration.PropertiesConfiguration;
 import com.example.blogpostapi.service.SQSConfigService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SQSConfigServiceImpl implements SQSConfigService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SQSConfigServiceImpl.class);
 
     @Autowired
     PropertiesConfiguration configuration;
@@ -38,11 +42,13 @@ public class SQSConfigServiceImpl implements SQSConfigService {
         try {
             result = sqs.createQueue(createQueueRequest);
         } catch (AmazonSQSException e) {
+            LOG.error("[SQS SERVICE] | error sending message", e);
             if (!e.getErrorCode().equals("QueueAlreadyExists")) {
                 throw e;
             }
         }
         if (result != null) {
+            LOG.info("[SQS SERVICE] | queue created successfully {}", result.getQueueUrl());
             return result.getQueueUrl();
         }
         return null;
@@ -63,6 +69,7 @@ public class SQSConfigServiceImpl implements SQSConfigService {
             throw e;
         }
         if (response != null) {
+            LOG.info("[SQS SERVICE] | message sent successfully {}", response.getMessageId());
             return response.getMessageId();
         }
         return null;

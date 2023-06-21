@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <property resource="application.properties" />
+    <appender name="cloud-watch" class="io.github.dibog.AwsLogAppender">
+
+        <awsConfig>
+            <credentials>
+                <accessKeyId>${aws.api.key}</accessKeyId>
+                <secretAccessKey>${aws.secret.key}</secretAccessKey>
+            </credentials>
+            <region></region>
+        </awsConfig>
+
+        <createLogGroup>true</createLogGroup>
+        <queueLength>100</queueLength>
+        <groupName>group-name</groupName>
+        <streamName>stream-name</streamName>
+        <dateFormat>yyyyMMdd_HHmm</dateFormat>
+
+        <layout>
+            <pattern>[%X{a} %X{b}] %-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </layout>
+
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="cloud-watch" />
+    </root>
+</configuration>
