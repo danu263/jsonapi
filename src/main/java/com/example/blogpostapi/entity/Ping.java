@@ -1,7 +1,10 @@
 package com.example.blogpostapi.entity;
 
+import lombok.Builder;
+
 import java.util.Objects;
 
+@Builder
 public class Ping {
 
     private Boolean success;

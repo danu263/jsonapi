@@ -48,4 +48,20 @@ public class PostServiceImpl implements PostService {
         return new PostResponse(posts);
     }
 
+    public void buildPost() {
+        Post post2 = new Post();
+        post2.setLikes(5);
+        post2.setId(1);
+        post2.setAuthor("author2");
+        Post post = Post.builder()
+                .author("Author")
+                .likes(5)
+                .id(1)
+                .ping(Ping.builder()
+                        .success(true)
+                        .build())
+                .build();
+        System.out.println(post.getAuthor());
+        System.out.println(post.getLikes());
+    }
 }

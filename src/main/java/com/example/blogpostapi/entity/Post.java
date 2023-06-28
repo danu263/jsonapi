@@ -1,10 +1,19 @@
 package com.example.blogpostapi.entity;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Post implements Serializable {
 
     private String author;
@@ -14,6 +23,7 @@ public class Post implements Serializable {
     private Double popularity;
     private Integer reads;
     private List<String> tags;
+    private Ping ping;
 
     @Override
     public boolean equals(Object o) {
@@ -39,61 +49,5 @@ public class Post implements Serializable {
                 ", reads=" + reads +
                 ", tags=" + tags +
                 '}';
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public Integer getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Integer authorId) {
-        this.authorId = authorId;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Integer likes) {
-        this.likes = likes;
-    }
-
-    public Double getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(Double popularity) {
-        this.popularity = popularity;
-    }
-
-    public Integer getReads() {
-        return reads;
-    }
-
-    public void setReads(Integer reads) {
-        this.reads = reads;
-    }
-
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
     }
 }
